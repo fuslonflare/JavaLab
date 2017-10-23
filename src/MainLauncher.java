@@ -1,18 +1,41 @@
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Phuwarin on 4/29/2017.
  */
 public class MainLauncher {
     public static void main(String[] args) {
         testCommand();
+        testCommand2();
     }
 
     private static void testCommand() {
-        Map<String, String> memberList = new HashMap<>();
-        memberList.put("759199790902847", "Phuwarin Janaporn");
-        memberList.put("4", "Mark Zuckerberg");
+        long start = System.nanoTime();
+        boolean a = true, b = true, c = false;
+        if (a || b || c) {
+            log("Something");
+        }
+        long stop = System.nanoTime();
+        log("Command1 : " + (stop - start) + " nanosec");
+    }
+
+    private static void testCommand2() {
+        long start = System.nanoTime();
+        boolean a = true, b = true, c = false;
+        if (a) {
+            log("Something");
+        } else if (b) {
+            log("Something");
+        } else if (c) {
+            log("Something");
+        } else {
+
+        }
+        long stop = System.nanoTime();
+        log("Command2 : " + (stop - start) + " nanosec");
+    }
+
+    private static boolean z() {
+        log("z");
+        return true;
     }
 
     private static void log(String message) {
