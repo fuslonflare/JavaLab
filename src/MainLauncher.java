@@ -3,34 +3,57 @@
  */
 public class MainLauncher {
     public static void main(String[] args) {
-        testCommand();
-        testCommand2();
+        Thread worker1 = new Thread(() -> {
+            for (int i = 0; i < 20; ++i) {
+                try {
+                    testCommand(i);
+                    logln("");
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Thread worker2 = new Thread(() -> {
+            for (int i = 0; i < 20; ++i) {
+                try {
+                    testCommand2(i);
+                    Thread.sleep(10);
+                    logln("");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        worker1.start();
+        worker2.start();
     }
 
-    private static void testCommand() {
+    private static void testCommand(int i) {
         long start = System.nanoTime();
         boolean a = true, b = true, c = false;
         if (a || b || c) {
-            log("Something");
+            //log("Something");
         }
         long stop = System.nanoTime();
-        log("Command1 : " + (stop - start) + " nanosec");
+        log("[Round " + i + "]Command1 : " + (stop - start) + " nanosec | ");
     }
 
-    private static void testCommand2() {
+    private static void testCommand2(int i) {
         long start = System.nanoTime();
         boolean a = true, b = true, c = false;
         if (a) {
-            log("Something");
+            //log("Something");
         } else if (b) {
-            log("Something");
+            //log("Something");
         } else if (c) {
-            log("Something");
+            //log("Something");
         } else {
 
         }
         long stop = System.nanoTime();
-        log("Command2 : " + (stop - start) + " nanosec");
+        log("[Round " + i + "] Command2 : " + (stop - start) + " nanosec | ");
     }
 
     private static boolean z() {
@@ -39,6 +62,10 @@ public class MainLauncher {
     }
 
     private static void log(String message) {
+        System.out.print(message);
+    }
+
+    private static void logln(String message) {
         System.out.println(message);
     }
 }
